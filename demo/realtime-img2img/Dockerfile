@@ -3,7 +3,7 @@ FROM node:20-alpine AS frontend
 RUN apk add --no-cache libc6-compat git
 WORKDIR /app
 
-RUN git clone https://github.com/cumulo-autumn/StreamDiffusion .
+RUN git clone https://github.com/genevera/StreamDiffusion . && git checkout install_fix
 
 WORKDIR /app/demo/realtime-img2img/frontend
 RUN npm ci
