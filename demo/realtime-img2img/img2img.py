@@ -18,11 +18,12 @@ from pydantic import BaseModel, Field
 from PIL import Image
 import math
 
-base_model = "stabilityai/sd-turbo"
+base_model = "stabilityai/sdxl-turbo"
 taesd_model = "madebyollin/taesd"
 
-default_prompt = "Portrait of The Joker halloween costume, face painting, with , glare pose, detailed, intricate, full of colour, cinematic lighting, trending on artstation, 8k, hyperrealistic, focused, extreme details, unreal engine 5 cinematic, masterpiece"
-default_negative_prompt = "black and white, blurry, low resolution, pixelated,  pixel art, low quality, low fidelity"
+default_prompt = """Batman villainess "Poison Ivy", detailed professional photograph, intricate details, amazing color, crisp cinematic lighting, sharp focus, award winning photograph"""
+
+default_negative_prompt = "black and white, blurry, low resolution, pixelated,  pixel art, low quality, low fidelity, lazy, no pride in the work"
 
 page_content = """<h1 class="text-3xl font-bold">StreamDiffusion</h1>
 <h3 class="text-xl font-bold">Image-to-Image SD-Turbo</h3>
@@ -63,10 +64,11 @@ class Pipeline:
         #     id="negative_prompt",
         # )
         width: int = Field(
-            512, min=2, max=15, title="Width", disabled=True, hide=True, id="width"
+            1024, min=2, max=15, title="Width", disabled=True, hide=True, id="width"
+
         )
         height: int = Field(
-            512, min=2, max=15, title="Height", disabled=True, hide=True, id="height"
+            1024, min=2, max=15, title="Height", disabled=True, hide=True, id="height"
         )
 
     def __init__(self, args: Args, device: torch.device, torch_dtype: torch.dtype):
@@ -82,13 +84,13 @@ class Pipeline:
             height=params.height,
             use_lcm_lora=False,
             output_type="pil",
-            warmup=10,
+            warmup=30,
             vae_id=None,
             acceleration=args.acceleration,
             mode="img2img",
             use_denoising_batch=True,
             cfg_type="none",
-            use_safety_checker=args.safety_checker,
+            use_safety_checker=False,
             # enable_similar_image_filter=True,
             # similar_image_filter_threshold=0.98,
             engine_dir=args.engine_dir,

@@ -6,7 +6,8 @@ torch
 fastapi==0.104.1
 uvicorn[standard]==0.24.0.post1
 Pillow==10.1.0
-accelerate==0.24.0
+accelerate>=0.26.0
+numpy<2
 compel==2.0.2
 controlnet-aux==0.0.7
 peft==0.6.0

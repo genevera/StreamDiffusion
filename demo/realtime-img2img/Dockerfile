@@ -65,6 +65,8 @@ RUN pip install --no-cache-dir -U -r requirements.txt
 RUN pip install git+https://github.com/cumulo-autumn/StreamDiffusion.git@main#egg=streamdiffusion[tensorrt]
 RUN python -m streamdiffusion.tools.install-tensorrt
 
+RUN python -m pip install accelerate'>='0.26.0 numpy'<'2
+
 
 USER user
 CMD ["python",  "main.py", "--debug", "--acceleration", "tensorrt"]
